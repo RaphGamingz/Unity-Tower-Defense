@@ -142,14 +142,14 @@ public class Tower : MonoBehaviour
                 if (WaveSpawner.enemyList[i] != null)
                 {
                     float distance = Vector3.SqrMagnitude(transform.position - WaveSpawner.enemyList[i].position); //Get distance of enemy
-                    if (distance < closestDistance && closestDistance <= range * range) //if distance is less than closest distance of enemy
+                    if (distance < closestDistance && distance <= range * range) //if distance is less than closest distance of enemy
                     {
                         closestDistance = distance; //Set new closest distance
                         nearestEnemy = WaveSpawner.enemyList[i]; //Set the enemy which is closest
                     }
                 }
             }
-            if (nearestEnemy != null && closestDistance <= range * range)
+            if (nearestEnemy != null)
             {
                 target = nearestEnemy; //If there is an enemy in range, set it as target
                 targetEnemy = nearestEnemy.GetComponent<Enemy>();
@@ -174,10 +174,47 @@ public class Tower : MonoBehaviour
                     }
                 }
             }
-            if (furthestEnemy != null && furthestDistance <= range * range)
+            if (furthestEnemy != null)
             {
                 target = furthestEnemy; //If there is an enemy in range, set it as target
                 targetEnemy = furthestEnemy.GetComponent<Enemy>();
+            }
+            else
+            {
+                target = null; //Do nothing
+            }
+        } else if (aimtype == AimType.MostHealth)
+        {
+            float mostHealth = -1; //initialise health of enemy
+            Transform mostHealthEnemy = null; //Initialise the most health enemy
+            Enemy mostHealthEnemyScript = null; //Initialise the most health enemy script
+            for (int i = 0; i < WaveSpawner.enemyList.Count; i++) //Loop through every enemy
+            {
+                if (WaveSpawner.enemyList[i] != null)
+                {
+                    float distance = Vector3.SqrMagnitude(transform.position - WaveSpawner.enemyList[i].position); //Get distance of enemy
+                    if (distance <= range * range) //if distance is in range
+                    {
+                        try
+                        {
+                            Enemy enemy = WaveSpawner.enemyList[i].GetComponent<Enemy>(); // Get the enemy script of the enemy
+                            if (enemy.health > mostHealth) // If enemies health is higher than the ones before
+                            {
+                                mostHealth = enemy.health; // Set new most health
+                                mostHealthEnemy = WaveSpawner.enemyList[i]; // Set new most health enemy
+                                mostHealthEnemyScript = enemy;
+                            }
+                        } catch
+                        {
+
+                        }
+                    }
+                }
+            }
+            if (mostHealthEnemy != null)
+            {
+                target = mostHealthEnemy; //If there is an enemy in range, set it as target
+                targetEnemy = mostHealthEnemyScript;
             }
             else
             {
@@ -235,4 +272,5 @@ public enum AimType
 {
     Closest,
     Furthest,
+    MostHealth,
 }
