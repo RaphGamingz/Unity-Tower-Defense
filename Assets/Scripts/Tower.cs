@@ -3,6 +3,7 @@ using UnityEngine;
 public class Tower : MonoBehaviour
 {
     public TowerType towerType = TowerType.None;
+    public int TowerLevel = 0;
     protected Transform target;
     protected Enemy targetEnemy;
     [Header("General")]
@@ -31,17 +32,17 @@ public class Tower : MonoBehaviour
     public Vector3 offset;
     //Script variables
     private bool isDestroyed = false;
-    private float clickTime = 1f;
-    private int towerCost;
+    private TowerBlueprint towerBlueprint;
+    private TowerInfo towerInfo;
     void Start()
     {
+        towerInfo = TowerInfo.instance;
         noZone.AddComponent<NoZone>().parent = this; //Add nozone script to tower's no zone
         if (towerType != TowerType.None)
             InvokeRepeating("UpdateTarget", 0f, 0.5f); //Update the target of the tower
     }
     void Update()
     {
-        clickTime += Time.deltaTime;
         if (GameManager.gameEnded || isDestroyed)
         {
             Destroy(gameObject); //Destroy tower if game has ended
@@ -127,9 +128,21 @@ public class Tower : MonoBehaviour
         PlayerStats.ChangeEnergy(EnergyGenerated); //Change the amount of energy
         PlayerStats.ChangeHealth(HealthGenerated); //Change the amount of health
     }
-    public void SetTowerCost(int cost)
+    public void SetTowerBlueprint(TowerBlueprint blueprint)
     {
-        towerCost = cost;
+        towerBlueprint = blueprint;
+    }
+    public TowerBlueprint GetTowerBlueprint()
+    {
+        return towerBlueprint;
+    }
+    public void SetDestroyed(bool destroyed)
+    {
+        isDestroyed = destroyed;
+    }
+    public bool GetDestroyed()
+    {
+        return isDestroyed;
     }
     void UpdateTarget()
     {
@@ -226,19 +239,16 @@ public class Tower : MonoBehaviour
     {
         if (mouseButton == 0)
         {
-            print("WIP");
-            return;
-        } else if (mouseButton == 1)
-        {
-            if (!isDestroyed && clickTime <= 0.5f)
+            if (!towerInfo.gameObject.activeSelf || towerInfo.transform.position != transform.position)
             {
-                PlayerStats.towers--; //Reduce number of towers
-                PlayerStats.ChangeEnergy(towerCost / 2); //Give back half of the energy required to build the tower
-                isDestroyed = true; //Set the tower to be destroyed
-                return;
+                towerInfo.setTower(this); // Show tower stats if it is selected and wasn't previously selected
             }
-            clickTime = 0f;
-        }
+            else
+            {
+                towerInfo.setTower(null); // Hide tower if it is already selected
+            }
+            return;
+        } else if (mouseButton == 1) {}
     }
     void OnDrawGizmosSelected()
     {

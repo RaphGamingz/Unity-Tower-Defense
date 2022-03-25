@@ -1,17 +1,18 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 public class TerrainScript : MonoBehaviour
 {
-    public Camera mainCamera;
-    public GameObject ghost;
-    public Ghost ghostScript;
-    public Transform towersParent;
     public float YOffset;
+    private Camera mainCamera;
+    private GameObject ghost;
     private BuildManager buildManager;
     private float clickTime;
     private Vector3 clickPos;
     void OnMouseDown()
     {
-        if (!buildManager.canBuild || !buildManager.hasEnergy || GameManager.gameEnded || PlayerStats.towers >= PlayerStats.maxTowers)
+        if (EventSystem.current.IsPointerOverGameObject())
+            return;
+        if (!buildManager.canBuild || PlayerStats.energy < buildManager.selectedBlueprint.buyCost || GameManager.gameEnded || PlayerStats.towers >= PlayerStats.maxTowers)
             return;
         if (Input.GetMouseButtonDown(0)) //If mouse is pressed and a tower can is selected
         {
@@ -22,15 +23,14 @@ public class TerrainScript : MonoBehaviour
                 if (clickTime < 0.5f && Vector3.SqrMagnitude(clickPos - hit.point) < 1) //If thehit point is very close and clicked twice very quickly
                 {
                     ghost.SetActive(false); //Hide ghost
-                    buildManager.BuildTower(ghost, towersParent); //Try build tower
-                } else
-                {
+                    buildManager.BuildTower(ghost); //Try build tower
+                } else {
                     if (hit.point.y + YOffset >= 1 && !buildManager.selectedBlueprint.ground || hit.point.y + YOffset < 1 && buildManager.selectedBlueprint.ground)
                     {
                         clickTime = 0; //Change click time to 0
                         clickPos = hit.point; //Set position where the mouse was
                         ghost.SetActive(true); //Show ghost of tower
-                        ghostScript.setGameobject(buildManager.selectedTower); //Set the tower the ghost is showing to the selected tower
+                        buildManager.ghostScript.setGameobject(buildManager.selectedTower); //Set the tower the ghost is showing to the selected tower
                         ghost.transform.position = hit.point; //Set position of ghost to the mouse position
                     }
                 }
@@ -40,10 +40,12 @@ public class TerrainScript : MonoBehaviour
     void Start()
     {
         buildManager = BuildManager.instance;
+        mainCamera = buildManager.mainCamera;
+        ghost = buildManager.ghost;
     }
     void Update()
     {
-        if (!buildManager.canBuild || !buildManager.hasEnergy || GameManager.gameEnded || PlayerStats.towers >= PlayerStats.maxTowers)
+        if (!buildManager.canBuild || PlayerStats.energy < buildManager.selectedBlueprint.buyCost || GameManager.gameEnded || PlayerStats.towers >= PlayerStats.maxTowers)
         {
             if (ghost.activeInHierarchy)
             {

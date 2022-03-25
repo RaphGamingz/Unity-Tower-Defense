@@ -9,7 +9,7 @@ public class Ghost : MonoBehaviour
     public Material holo;
     public Material noZone;
     Vector3 size = new Vector3();
-    public List<Material> hologramList = new List<Material>();
+    private List<Material> hologramList = new List<Material>();
     public void setGameobject(GameObject go)
     {
         if (ogTower == go) //Return if same tower selected

@@ -52,6 +52,7 @@ public class GameManager : MonoBehaviour
             Waypoints.RemovePath();
             PlayerStats.Reset();
             WaveSpawner.Reset();
+            TowerInfo.instance.setTower(null);
             gameEnded = true;
         }
     }

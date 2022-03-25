@@ -115,10 +115,6 @@ public class TerrainLoader : MonoBehaviour
                 terrainObject.transform.localScale = scale; //Set scale of game object
                 TerrainScript terrainS = terrainObject.GetComponent<TerrainScript>(); //Get terrain script of game object
                 //Set values of script
-                terrainS.mainCamera = terrainScript.mainCamera;
-                terrainS.ghost = terrainScript.ghost;
-                terrainS.ghostScript = terrainScript.ghostScript;
-                terrainS.towersParent = terrainScript.towersParent;
                 terrainS.YOffset = terrainScript.YOffset;
             }
         }
