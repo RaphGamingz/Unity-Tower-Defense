@@ -5336,16 +5336,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   towerType: 2
+  TowerLevel: 0
   EnergyGenerated: -100
   HealthGenerated: 1
   range: 20
   turnSpeed: 20
+  aimtype: 0
   rotationPoint: {fileID: 4262757179543020274}
   firePoint: {fileID: 8846754946266394264}
   noZone: {fileID: 4833297577940711851}
   bulletPrefab: {fileID: 0}
   bulletDamage: 0
+  bulletRange: 0
+  bulletSpeed: 0
   fireRate: 0
+  damageOverTime: 1
   lineRenderer: {fileID: 1263717577}
   impactEffect: {fileID: 289301157767549134}
   impactLight: {fileID: 1424639803642860871}

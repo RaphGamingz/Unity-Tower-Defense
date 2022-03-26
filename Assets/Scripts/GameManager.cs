@@ -1,6 +1,5 @@
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static bool gameEnded = true;
@@ -55,5 +54,10 @@ public class GameManager : MonoBehaviour
             TowerInfo.instance.setTower(null);
             gameEnded = true;
         }
+    }
+
+    public static void returnToMenu()
+    {
+        SceneManager.LoadScene(0);
     }
 }

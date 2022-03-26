@@ -21,7 +21,9 @@ public class Tower : MonoBehaviour
     public GameObject noZone;
     [Header("Bullet")]
     public GameObject bulletPrefab;
-    public int bulletDamage = 1;
+    public float bulletDamage = 1f;
+    public float bulletRange = 0f;
+    public float bulletSpeed = 0f;
     public float fireRate = 1f;
     private float fireCountdown = 0f;
     [Header("Laser")]
@@ -119,8 +121,7 @@ public class Tower : MonoBehaviour
 
         if (bullet != null)
         {
-            bullet.SetTarget(targetEnemy); //Set target of bullet
-            bullet.SetDamage(bulletDamage); //Set damage of bullet
+            bullet.SetInfo(targetEnemy, bulletDamage, bulletRange, bulletSpeed); //Set info of bullet
         }
     }
     public void WaveStart()

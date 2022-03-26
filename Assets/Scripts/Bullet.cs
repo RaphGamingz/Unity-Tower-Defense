@@ -4,18 +4,16 @@ public class Bullet : MonoBehaviour
     private Transform target;
     private Enemy targetEnemy;
     public GameObject effect;
-    public float speed = 10f;
-    [Tooltip("The blast radius (range) of the bullet")]
-    public float range = 0f;
-    private int damage;
-    public void SetTarget(Enemy _target)
+    private float speed;
+    private float range;
+    private float damage;
+    public void SetInfo(Enemy _target, float _damage, float _range, float _speed)
     {
         targetEnemy = _target;
         target = _target.gameObject.transform;
-    }
-    public void SetDamage(int _damage)
-    {
         damage = _damage;
+        range = _range;
+        speed = _speed;
     }
     void Update()
     {

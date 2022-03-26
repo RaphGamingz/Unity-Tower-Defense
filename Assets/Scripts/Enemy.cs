@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 public class Enemy : MonoBehaviour
 {
     private Transform target;
@@ -12,12 +13,15 @@ public class Enemy : MonoBehaviour
     [Header("Rendering")]
     public MeshRenderer renderedObject;
     public float dissolveRate = 0.1f;
-
+    [Header("Health Bar")]
+    public Slider healthBar;
     private float dissolveValue = 0;
     private Boolean dissolving = false;
     private Boolean appearing = true;
     void Start()
     {
+        healthBar.maxValue = health;
+        healthBar.value = health;
         target = Waypoints.points[waypointIndex];
     }
     void Update()
@@ -41,6 +45,7 @@ public class Enemy : MonoBehaviour
             {
                 Quaternion lookRotation = Quaternion.LookRotation(dir.normalized); //Get direction to look at
                 transform.rotation = Quaternion.SlerpUnclamped(transform.rotation, lookRotation, turnSpeed * Time.deltaTime); //Look at direction, slerping it
+                healthBar.transform.rotation = Quaternion.Euler(-transform.rotation.x, -transform.rotation.y, -transform.rotation.z);
             }
 
             if ((transform.position - target.position).sqrMagnitude <= 0.01f * speed)
@@ -51,8 +56,10 @@ public class Enemy : MonoBehaviour
     }
     public void takeDamage(float amount)
     {
+        health = Mathf.Clamp(health, 0, Mathf.Infinity);
         PlayerStats.ChangeEnergy((int)Mathf.Clamp(amount, 0, health)); //Give player energy by how much health is taken off
         health -= amount; //Reduce health
+        healthBar.value = health;
         if (health <= 0) //If the enemy is dead
         {
             PlayerStats.ChangeEnergy(energy); //Give player extra energy

@@ -226,6 +226,8 @@ MonoBehaviour:
   noZone: {fileID: 5243915421556969280}
   bulletPrefab: {fileID: 6512413096076974632, guid: 41ad71508ab6da54fac6328326d3a448, type: 3}
   bulletDamage: 5
+  bulletRange: 0
+  bulletSpeed: 25
   fireRate: 1
   damageOverTime: 1
   lineRenderer: {fileID: 0}
