@@ -38,7 +38,7 @@ public class BuildManager : MonoBehaviour
         if (PlayerStats.energy < selectedBuildTower.buyCost || PlayerStats.towers >= PlayerStats.maxTowers || GameManager.gameEnded)
             return;
         PlayerStats.ChangeEnergy(-selectedBuildTower.buyCost); //Reduce energy by how much it costs
-        PlayerStats.towers++; //Increase the number of towers that are in the game
+        PlayerStats.ChangeTowerCount(1); //Increase the number of towers that are in the game
         GameObject tower = Instantiate(selectedBuildTower.tower, ghost.transform.position, ghost.transform.rotation, towersParent); //create the tower
         Tower t = tower.GetComponent<Tower>(); //Get the script of the tower
         t.SetTowerBlueprint(selectedBuildTower); //Set the blueprint of the tower
@@ -54,7 +54,7 @@ public class BuildManager : MonoBehaviour
         int nextTowerLevel = tower.TowerLevel; //Get next tower
         if (nextTowerLevel >= tb.upgradeCosts.Count)
             return null;
-        if (PlayerStats.energy < tb.upgradeCosts[nextTowerLevel] || PlayerStats.towers >= PlayerStats.maxTowers || GameManager.gameEnded)
+        if (PlayerStats.energy < tb.upgradeCosts[nextTowerLevel] || GameManager.gameEnded)
             return null;
         towerList.Remove(tower); //Remove the tower from the list of towers
         Destroy(tower.gameObject); //Remove the old tower
@@ -63,14 +63,14 @@ public class BuildManager : MonoBehaviour
         Tower t = upgradedTower.GetComponent<Tower>(); //Get the script of the upgraded tower
         t.SetTowerBlueprint(tb); //Set the blueprint of the upgraded tower
         towerList.Add(t); //Add the upgraded tower to the list of towers
-        Destroy(Instantiate(buildEffect, ghost.transform.position, Quaternion.identity), 2f); //Create build effect and destroy 2 seconds later
+        Destroy(Instantiate(buildEffect, tower.transform.position, Quaternion.identity), 2f); //Create build effect and destroy 2 seconds later
         return t;
     }
     public void SellTower(Tower tower)
     {
         if (!tower.GetDestroyed())
         {
-            PlayerStats.towers--; //Reduce number of towers
+            PlayerStats.ChangeTowerCount(-1); //Reduce number of towers
             PlayerStats.ChangeEnergy(tower.GetTowerBlueprint().buyCost / 2); //Give back half of the energy required to build the tower
             tower.SetDestroyed(true); //Set the tower to be destroyed
             Destroy(Instantiate(sellEffect, tower.transform.position, Quaternion.identity), 2f); //Create sell effect and destroy 2 seconds later

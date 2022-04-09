@@ -37,6 +37,13 @@ public class TerrainScript : MonoBehaviour
             }
         }
     }
+    void OnMouseOver()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            ghost.SetActive(false); //Hide ghost
+        }
+    }
     void Start()
     {
         buildManager = BuildManager.instance;

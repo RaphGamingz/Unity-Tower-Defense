@@ -2,7 +2,7 @@ using UnityEngine;
 public class PlayerStats : MonoBehaviour
 {
     public static int energy;
-    public static int startEnergy = 300; //Energy player is given at the start
+    public static int startEnergy = 650; //Energy player is given at the start
     public static int health;
     public static int startHealth = 100; //Health player is given at the start
     public static int maxHealth = 100;
@@ -21,6 +21,7 @@ public class PlayerStats : MonoBehaviour
         towers = 0;
         UIManager.UpdateEnergy(energy);
         UIManager.UpdateHealth(health);
+        UIManager.UpdateTower(towers);
         GameManager.updateHealth(health);
     }
     public static void ChangeEnergy(int amount)
@@ -34,5 +35,10 @@ public class PlayerStats : MonoBehaviour
         health = Mathf.Clamp(health, 0, maxHealth);
         UIManager.UpdateHealth(health);
         GameManager.updateHealth(health);
+    }
+    public static void ChangeTowerCount(int tower)
+    {
+        towers += tower;
+        UIManager.UpdateTower(towers);
     }
 }

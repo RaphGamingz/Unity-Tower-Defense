@@ -70,7 +70,7 @@ public class TerrainLoader : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Cannot save terrain in an app 'thats illegal'");
+            Debug.LogError("Cannot save terrain in an app thats illegal'");
         }
     }
     public static void sloadTerrain(string path)

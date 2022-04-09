@@ -5337,9 +5337,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerType: 2
   TowerLevel: 0
-  EnergyGenerated: -100
+  EnergyGenerated: -200
   HealthGenerated: 1
-  range: 20
+  range: 40
   turnSpeed: 20
   aimtype: 0
   rotationPoint: {fileID: 4262757179543020274}

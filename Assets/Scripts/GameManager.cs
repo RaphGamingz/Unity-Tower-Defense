@@ -14,7 +14,8 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
             return;
-        } else
+        }
+        else
         {
             Debug.LogError("More than one game manager in a scene");
         }
@@ -47,7 +48,10 @@ public class GameManager : MonoBehaviour
     {
         if (gameEnded == false) //If game hasn't ended, reset everything
         {
-            Destroy(Instantiate(instance.gameEndEffect, Waypoints.points[Waypoints.points.Length - 1].position, Quaternion.Euler(-90, 0, 0)), 6);
+            try
+            {
+                Destroy(Instantiate(instance.gameEndEffect, Waypoints.points[Waypoints.points.Length - 1].position, Quaternion.Euler(-90, 0, 0)), 6);
+            } catch { }
             Waypoints.RemovePath();
             PlayerStats.Reset();
             WaveSpawner.Reset();
@@ -58,6 +62,8 @@ public class GameManager : MonoBehaviour
 
     public static void returnToMenu()
     {
+        endGame();
+        terrainLoaded = null;
         SceneManager.LoadScene(0);
     }
 }

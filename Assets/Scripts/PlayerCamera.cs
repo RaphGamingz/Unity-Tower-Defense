@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using Cinemachine;
 public class PlayerCamera : MonoBehaviour
 {
@@ -6,6 +7,7 @@ public class PlayerCamera : MonoBehaviour
     public float dragSpeed = .5f;
     private Vector3 dragOrigin;
     private Vector2 axisValues;
+    private float POV;
     void Update()
     {
         if (Input.GetMouseButtonDown(1))
@@ -20,5 +22,13 @@ public class PlayerCamera : MonoBehaviour
         cam.m_XAxis.Value = axisValues.x; //Assigning these values to camera
         cam.m_YAxis.Value = axisValues.y;
         axisValues.y = Mathf.Clamp(axisValues.y, 0, 1); //Clamping y value of camera
+    }
+    public void changePOV(float value)
+    {
+        POV = value;
+    }
+    public void setPov()
+    {
+        cam.m_Lens.FieldOfView = POV;
     }
 }

@@ -3,19 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 public class WaveSpawner : MonoBehaviour
 {
+    public static int EnemiesAlive = 0;
+    public Wave[] waves;
     [HideInInspector] public Transform spawnPoint;
-    public Transform enemyPrefab;
-    public Transform enemyPrefab2;
-    public Transform bossPrefab;
-
     public Transform enemyParent;
-
     [Tooltip("Time in seconds between each wave")]
     public float timeBetweenWaves = 5f;
-    private float countdown = 5f;
+    private float countdown = 15f;
     private int waveIndex = 0;
-
     public static List<Transform> enemyList = new List<Transform>();
+    public static WaveSpawner instance = null;
+    void Awake()
+    {
+        if (instance != null)
+        {
+            Debug.LogError("More than one wave spwaner in a scene");
+            return;
+        }
+        instance = this;
+    }
     void Start()
     {
         InvokeRepeating("RemoveMissingEntries", 0f, 5f); //Remove missing entries of enemies every 5 seconds
@@ -29,10 +35,15 @@ public class WaveSpawner : MonoBehaviour
             UIManager.UpdateCount(countdown);
             return;
         }
+        if (EnemiesAlive > 0)
+        {
+            return;
+        }
         if (countdown <= 0f) //Start spawning enemies if countdown reaches 0
         {
             StartCoroutine(SpawnWave());
             countdown = timeBetweenWaves;
+            return;
         }
         countdown -= Time.deltaTime; //Reduce countdown by time
         countdown = Mathf.Clamp(countdown, 0, Mathf.Infinity); //Clamp countdown so that it doesn't show negatives
@@ -40,38 +51,22 @@ public class WaveSpawner : MonoBehaviour
     }
     IEnumerator SpawnWave()
     {
-        waveIndex++;
+        if (waveIndex < waves.Length)
+            waveIndex++;
         BuildManager.instance.WaveStart(); //Tell buildmanager that the wave has started
         UIManager.UpdateWave(waveIndex); //Update UI
-        for (int i = 0; i < waveIndex; i++)
+        Wave wave = waves[waveIndex - 1];
+        for (int i = 0; i < wave.enemies.Length; i++)
         {
-            SpawnEnemy(enemyPrefab);
-            yield return new WaitForSecondsRealtime(0.5f);
-        }
-        if (waveIndex % 2 == 0)
-        {
-            for (int i = 0; i < waveIndex / 5; i++)
+            EnemyType enemyType = wave.enemies[i];
+            EnemiesAlive += enemyType.amount;
+            for (int num = 0; num < enemyType.amount; num++)
             {
-                SpawnEnemy(enemyPrefab2);
-                yield return new WaitForSecondsRealtime(0.5f);
+                SpawnEnemy(enemyType.enemy);
+                yield return new WaitForSecondsRealtime(1 / wave.rate);
             }
         }
-        if (waveIndex % 10 == 0)
-        {
-            for (int i = 0; i < waveIndex / 10; i++)
-            {
-                SpawnEnemy(bossPrefab);
-                yield return new WaitForSecondsRealtime(0.5f);
-            }
-        }
-        if (waveIndex == 50)
-        {
-            for (int i = 0; i < 50; i++)
-            {
-                SpawnEnemy(bossPrefab);
-                yield return new WaitForSecondsRealtime(0.5f);
-            }
-        }
+        PlayerStats.ChangeEnergy(wave.bonusEnergy);
     }
     void SpawnEnemy(Transform prefab)
     {

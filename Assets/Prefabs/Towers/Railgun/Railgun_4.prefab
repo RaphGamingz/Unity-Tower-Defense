@@ -134,17 +134,17 @@ MonoBehaviour:
   TowerLevel: 3
   EnergyGenerated: 0
   HealthGenerated: 0
-  range: 40
+  range: 42
   turnSpeed: 6
   aimtype: 0
   rotationPoint: {fileID: 6093385049497272414}
   firePoint: {fileID: 6093385049141051710}
   noZone: {fileID: 6093385049708569259}
   bulletPrefab: {fileID: 694607366122424930, guid: af9b20d3217ff624786320ad5f0520bc, type: 3}
-  bulletDamage: 80
-  bulletRange: 2
+  bulletDamage: 150
+  bulletRange: 1
   bulletSpeed: 100
-  fireRate: 0.3
+  fireRate: 0.12
   damageOverTime: 1
   lineRenderer: {fileID: 0}
   impactEffect: {fileID: 0}

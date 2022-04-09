@@ -7,6 +7,7 @@ public class UIManager : MonoBehaviour
     public TextMeshPro waveText;
     public TextMeshPro healthText;
     public TextMeshPro energyText;
+    public TextMeshPro towerText;
 
     public GameObject trollObject;
     void Awake()
@@ -40,5 +41,9 @@ public class UIManager : MonoBehaviour
     public static void UpdateWave(int wave) //Wave of game
     {
         instance.waveText.text = "Wave:\n" + wave;
+    }
+    public static void UpdateTower(int towers) //Number of towers
+    {
+        instance.towerText.text = towers + "/" + PlayerStats.maxTowers;
     }
 }
