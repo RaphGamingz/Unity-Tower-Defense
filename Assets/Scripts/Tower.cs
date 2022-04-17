@@ -27,11 +27,18 @@ public class Tower : MonoBehaviour
     public float fireRate = 1f;
     private float fireCountdown = 0f;
     [Header("Laser")]
-    public float damageOverTime = 1;
+    public AnimationCurve damageOverTime;
     public LineRenderer lineRenderer;
     public ParticleSystem impactEffect;
     public Light impactLight;
     public Vector3 offset;
+    private float timeOnEnemy;
+    private Enemy lastEnemy;
+    [Header("Spawner")]
+    public Transform spawnPrefab;
+    public float spawnRate = 0.001f;
+    public float spawnDamage = 1f;
+    private float spawnCountdown = 0f;
     //Script variables
     private bool isDestroyed = false;
     private TowerBlueprint towerBlueprint;
@@ -101,7 +108,16 @@ public class Tower : MonoBehaviour
     }
     void Laser()
     {
-        targetEnemy.takeDamage(damageOverTime * Time.deltaTime);
+        if (lastEnemy == targetEnemy)
+        {
+            timeOnEnemy += Time.deltaTime;
+        } else
+        {
+            lastEnemy = targetEnemy;
+            timeOnEnemy = 0;
+        }
+        targetEnemy.takeDamage(damageOverTime.Evaluate(timeOnEnemy) * Time.deltaTime);
+        Debug.Log(damageOverTime.Evaluate(timeOnEnemy));
         if (!lineRenderer.enabled) //Show line renderer if it is hidden
         {
             lineRenderer.enabled = true;
@@ -147,6 +163,13 @@ public class Tower : MonoBehaviour
     }
     void UpdateTarget()
     {
+        if (towerType == TowerType.Laser)
+        {
+            if (target && Vector3.SqrMagnitude(transform.position - target.position) < range * range)
+            {
+                return;
+            }
+        }
         if (aimtype == AimType.Closest)
         {
             float closestDistance = range * range + 1; //initialise closest distance of enemy
@@ -277,7 +300,8 @@ public enum TowerType
 {
     None,
     Bullet,
-    Laser
+    Laser,
+    Spawner
 }
 public enum AimType
 {

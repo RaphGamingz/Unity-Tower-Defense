@@ -8,8 +8,6 @@ public class UIManager : MonoBehaviour
     public TextMeshPro healthText;
     public TextMeshPro energyText;
     public TextMeshPro towerText;
-
-    public GameObject trollObject;
     void Awake()
     {
         if (instance != null)
@@ -22,13 +20,6 @@ public class UIManager : MonoBehaviour
     public static void UpdateEnergy(int energy) //Energy to build towers
     {
         instance.energyText.text = "Energy:\n" + energy;
-        if (!instance.trollObject.activeSelf && energy >= 2000)
-        {
-            instance.trollObject.SetActive(true);
-        } else if (instance.trollObject.activeSelf && energy < 2000)
-        {
-            instance.trollObject.SetActive(false);
-        }
     }
     public static void UpdateHealth(int health) //Health of game
     {

@@ -11,9 +11,9 @@ public class FutureStuff
     //Enemy that shortcuts path
     //APRIL FOOLS ENEMY WHICH DOESNT "DIE"
     //Self destruct tower
+    //A way to escape the building
 
     //TODO
     //ADD credit system
     //SAVING - DONT SAVE GAMESTATE, SAVE STATS BUT NOT WAVES E.G. How tower battles only saves gold and towers unlocked
-    //Make an option for lasers to use an animation curve to determine their damage
 }

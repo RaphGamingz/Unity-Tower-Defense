@@ -141,7 +141,7 @@ MonoBehaviour:
   firePoint: {fileID: 6093385049141051710}
   noZone: {fileID: 6093385049708569259}
   bulletPrefab: {fileID: 694607366122424930, guid: af9b20d3217ff624786320ad5f0520bc, type: 3}
-  bulletDamage: 150
+  bulletDamage: 200
   bulletRange: 1
   bulletSpeed: 100
   fireRate: 0.12

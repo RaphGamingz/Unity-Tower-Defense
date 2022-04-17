@@ -5350,7 +5350,30 @@ MonoBehaviour:
   bulletRange: 0
   bulletSpeed: 0
   fireRate: 0
-  damageOverTime: 1
+  damageOverTime:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 3.0039237
+      inSlope: 0.5920338
+      outSlope: 0.5920338
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.16250001
+    - serializedVersion: 3
+      time: 10.001381
+      value: 9.99556
+      inSlope: 1.9300926
+      outSlope: 1.9300926
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.07435201
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   lineRenderer: {fileID: 1263717577}
   impactEffect: {fileID: 289301157767549134}
   impactLight: {fileID: 1424639803642860871}
