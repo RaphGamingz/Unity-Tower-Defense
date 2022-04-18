@@ -91,4 +91,8 @@ public class WaveSpawner : MonoBehaviour
         UIManager.UpdateWave(0);
         UIManager.UpdateCount(0);
     }
+    public static int GetWave()
+    {
+        return instance.waveIndex;
+    }
 }

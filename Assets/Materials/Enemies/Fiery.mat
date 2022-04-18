@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Normal
+  m_Name: Fiery
   m_Shader: {fileID: -6465566751694194690, guid: 26b6808b700040644926ab0351960c3b, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 2
@@ -122,7 +122,7 @@ Material:
     m_Colors:
     - Color_0da36fa7d1774423a7d85d17cb6b2bf9: {r: 1108.9839, g: 0, b: 0, a: 0}
     - Color_7faf145188a34c40b50ee4631ae371dd: {r: 0.9811321, g: 0, b: 0, a: 0}
-    - Color_Color: {r: 0.7490196, g: 0, b: 0, a: 0}
+    - Color_Color: {r: 32, g: 0, b: 0, a: 0}
     - Color_Edge: {r: 255.99997, g: 0, b: 0, a: 0}
     - Color_dc2bd97118c14080b38fd35d51c298cf: {r: 1024, g: 0, b: 0, a: 0}
     - Color_e35311a8c48f4117b95a6b421db7d19e: {r: 0.98039216, g: 0, b: 0, a: 0}

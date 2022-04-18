@@ -14,6 +14,8 @@ public class FutureStuff
     //A way to escape the building
 
     //TODO
-    //ADD credit system
+    //Finish enemy summoner
+    //Finish tower spawner
+    //Finish credit system
     //SAVING - DONT SAVE GAMESTATE, SAVE STATS BUT NOT WAVES E.G. How tower battles only saves gold and towers unlocked
 }

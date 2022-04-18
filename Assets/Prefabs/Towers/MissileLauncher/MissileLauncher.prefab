@@ -298,14 +298,22 @@ MonoBehaviour:
   noZone: {fileID: 7450402992034163147}
   bulletPrefab: {fileID: 4623157011493294415, guid: 4a7da211b557d8d4b97da4b5c22aab41, type: 3}
   bulletDamage: 2
-  bulletRange: 2.5
+  bulletRange: 4.5
   bulletSpeed: 20
   fireRate: 0.4
-  damageOverTime: 1
+  damageOverTime:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   lineRenderer: {fileID: 0}
   impactEffect: {fileID: 0}
   impactLight: {fileID: 0}
   offset: {x: 0, y: 0, z: 0}
+  spawnPrefab: {fileID: 0}
+  spawnRate: 0.001
+  spawnDamage: 1
 --- !u!1 &7962432828020768845
 GameObject:
   m_ObjectHideFlags: 0

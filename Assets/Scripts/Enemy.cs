@@ -99,7 +99,7 @@ public class Enemy : MonoBehaviour
         if (waypointIndex >= Waypoints.points.Length - 1) //If it has reached the end waypoint
         {
             dissolving = true; //Start to dissolve
-            PlayerStats.ChangeHealth((int)-health); //Reduce player's health by how much health is remaining
+            PlayerStats.ChangeHealth((int)-Mathf.Clamp(health, 0, Mathf.Infinity)); //Reduce player's health by how much health is remaining
             return;
         }
         waypointIndex++; //Increase index

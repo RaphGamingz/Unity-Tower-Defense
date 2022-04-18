@@ -2,7 +2,7 @@ using UnityEngine;
 public class PlayerStats : MonoBehaviour
 {
     public static int energy;
-    public static int startEnergy = 650; //Energy player is given at the start
+    public static int startEnergy = 800; //Energy player is given at the start
     public static int health;
     public static int startHealth = 100; //Health player is given at the start
     public static int maxHealth = 100;
