@@ -74,10 +74,7 @@ public class Bullet : MonoBehaviour
                     Damage(collider.transform.parent); //Hurt the enemy
                 }
             }
-            catch (System.Exception)
-            {
-
-            }
+            catch (System.Exception) {}
         }
     }
     void OnDrawGizmosSelected()

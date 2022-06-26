@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
     public float speed = 10f;
     public float turnSpeed = 50f;
     public float health = 5;
+    public bool awardsEnergy = true;
     public int energy = 5; // How much energy is given when killed
     [Header("Summoning")]
     public bool summonsEnemies = false;
@@ -23,7 +24,7 @@ public class Enemy : MonoBehaviour
     private float dissolveValue = 0;
     private Boolean dissolving = false;
     private Boolean appearing = true;
-    //private float cooldown;
+    private float cooldown = 0;
     void Start()
     {
         healthBar.maxValue = health;
@@ -53,18 +54,18 @@ public class Enemy : MonoBehaviour
                 transform.rotation = Quaternion.SlerpUnclamped(transform.rotation, lookRotation, turnSpeed * Time.deltaTime); //Look at direction, slerping it
                 healthBar.transform.rotation = Quaternion.Euler(-transform.rotation.x, -transform.rotation.y, -transform.rotation.z);
             }
-            //if (summonsEnemies && timeSummon != null)
-            //{
-            //    cooldown -= Time.deltaTime;
-            //    if (cooldown < 0)
-            //    {
-            //        cooldown = summonCooldown;
-            //        Transform enemy = Instantiate(timeSummon, transform.position, transform.rotation, WaveSpawner.instance.enemyParent);
-            //        WaveSpawner.enemyList.Add(enemy);
-            //        WaveSpawner.EnemiesAlive++;
-            //        
-            //    }
-            //}
+            if (summonsEnemies && timeSummon != null)
+            {
+                cooldown -= Time.deltaTime;
+                if (cooldown < 0)
+                {
+                    cooldown = summonCooldown;
+                    Transform enemy = Instantiate(timeSummon, transform.position, transform.rotation, WaveSpawner.instance.enemyParent);
+                    WaveSpawner.enemyList.Add(enemy);
+                    WaveSpawner.EnemiesAlive++;
+                    enemy.GetComponent<Enemy>().setWaypoint(target, waypointIndex);
+                }
+            }
             if ((transform.position - target.position).sqrMagnitude <= 0.01f * speed)
             {
                 SetNextWaypoint(); //Set it's new target when this target is reached
@@ -78,7 +79,10 @@ public class Enemy : MonoBehaviour
             return;
         }
         health = Mathf.Clamp(health, 0, Mathf.Infinity);
-        PlayerStats.ChangeEnergy((int)Mathf.Clamp(amount, 0, health)); //Give player energy by how much health is taken off
+        if (awardsEnergy)
+        {
+            PlayerStats.ChangeEnergy((int)Mathf.Clamp(amount, 0, health)); //Give player energy by how much health is taken off
+        }
         health -= amount; //Reduce health
         healthBar.value = health;
         if (health <= 0) //If the enemy is dead
@@ -90,7 +94,10 @@ public class Enemy : MonoBehaviour
                 WaveSpawner.enemyList.Add(enemy);
                 WaveSpawner.EnemiesAlive++;
             }
-            PlayerStats.ChangeEnergy(energy); //Give player extra energy
+            if (awardsEnergy)
+            {
+                PlayerStats.ChangeEnergy(energy); //Give player extra energy
+            }
             dissolving = true; // Set to die
         }
     }

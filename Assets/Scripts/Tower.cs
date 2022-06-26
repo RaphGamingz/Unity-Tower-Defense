@@ -35,9 +35,13 @@ public class Tower : MonoBehaviour
     private float timeOnEnemy;
     private Enemy lastEnemy;
     [Header("Spawner")]
-    public Transform spawnPrefab;
-    public float spawnRate = 0.001f;
-    public float spawnDamage = 1f;
+    public GameObject spawnPrefab;
+    public float spawnRate = 0.02f;
+    public float spawnHealth = 50f;
+    public float spawnDamage = 0f;
+    [Tooltip("Range of the damage caused when the spawned dies")]
+    public float spawnRange = 0.1f;
+    public float spawnSpeed = 10f;
     private float spawnCountdown = 0f;
     //Script variables
     private bool isDestroyed = false;
@@ -47,7 +51,7 @@ public class Tower : MonoBehaviour
     {
         towerInfo = TowerInfo.instance;
         noZone.AddComponent<NoZone>().parent = this; //Add nozone script to tower's no zone
-        if (towerType != TowerType.None)
+        if (towerType != TowerType.None && towerType != TowerType.Spawner)
             InvokeRepeating("UpdateTarget", 0f, 0.5f); //Update the target of the tower
     }
     void Update()
@@ -55,6 +59,22 @@ public class Tower : MonoBehaviour
         if (GameManager.gameEnded || isDestroyed)
         {
             Destroy(gameObject); //Destroy tower if game has ended
+            return;
+        }
+        if (towerType == TowerType.None)
+        {
+            return;
+        }
+        if (towerType == TowerType.Spawner)
+        {
+            spawnCountdown -= Time.deltaTime;
+            if (spawnRate == 0) //Return if tower's spawn rate is 0
+                return;
+            if (spawnCountdown <= 0)
+            {
+                Spawn(); //Try to spawn
+                spawnCountdown = 1 / spawnRate; //Set spawn rate countdown
+            }
             return;
         }
         fireCountdown -= Time.deltaTime; //Decrease fire countdown
@@ -106,6 +126,17 @@ public class Tower : MonoBehaviour
         rotationPoint.rotation = Quaternion.SlerpUnclamped(rotationPoint.rotation, lookRotation, turnSpeed * Time.deltaTime); //Rotate tower to look at enemy
         return lookRotation; //Return lookrotation
     }
+    void Spawn()
+    {
+        Transform spawnTrans = Waypoints.points[Waypoints.points.Length - 1];
+        GameObject spawnObject = Instantiate(spawnPrefab, spawnTrans.position, spawnTrans.rotation); //Spawn
+        PathBullet spawned = spawnObject.GetComponent<PathBullet>(); //Get spawned's script
+
+        if (spawned != null)
+        {
+            spawned.SetInfo(spawnHealth, spawnDamage, spawnRange, spawnSpeed, spawnSpeed * 5); //Set info of spawned
+        }
+    }
     void Laser()
     {
         if (lastEnemy == targetEnemy)
@@ -117,7 +148,6 @@ public class Tower : MonoBehaviour
             timeOnEnemy = 0;
         }
         targetEnemy.takeDamage(damageOverTime.Evaluate(timeOnEnemy) * Time.deltaTime);
-        Debug.Log(damageOverTime.Evaluate(timeOnEnemy));
         if (!lineRenderer.enabled) //Show line renderer if it is hidden
         {
             lineRenderer.enabled = true;
@@ -258,6 +288,45 @@ public class Tower : MonoBehaviour
                 target = null; //Do nothing
             }
         }
+        else if (aimtype == AimType.LeastHealth)
+        {
+            float leastHealth = float.MaxValue; //initialise health of enemy
+            Transform leastHealthEnemy = null; //Initialise the least health enemy
+            Enemy leastHealthEnemyScript = null; //Initialise the least health enemy script
+            for (int i = 0; i < WaveSpawner.enemyList.Count; i++) //Loop through every enemy
+            {
+                if (WaveSpawner.enemyList[i] != null)
+                {
+                    float distance = Vector3.SqrMagnitude(transform.position - WaveSpawner.enemyList[i].position); //Get distance of enemy
+                    if (distance <= range * range) //if distance is in range
+                    {
+                        try
+                        {
+                            Enemy enemy = WaveSpawner.enemyList[i].GetComponent<Enemy>(); // Get the enemy script of the enemy
+                            if (enemy.health < leastHealth) // If enemies health is lower than the ones before
+                            {
+                                leastHealth = enemy.health; // Set new least health
+                                leastHealthEnemy = WaveSpawner.enemyList[i]; // Set new least health enemy
+                                leastHealthEnemyScript = enemy;
+                            }
+                        }
+                        catch
+                        {
+
+                        }
+                    }
+                }
+            }
+            if (leastHealthEnemy != null)
+            {
+                target = leastHealthEnemy; //If there is an enemy in range, set it as target
+                targetEnemy = leastHealthEnemyScript;
+            }
+            else
+            {
+                target = null; //Do nothing
+            }
+        }
     }
     public void selected(int mouseButton)
     {
@@ -308,4 +377,5 @@ public enum AimType
     Closest,
     Furthest,
     MostHealth,
+    LeastHealth,
 }

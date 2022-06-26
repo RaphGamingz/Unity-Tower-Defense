@@ -417,8 +417,19 @@ MonoBehaviour:
   bulletRange: 0
   bulletSpeed: 35
   fireRate: 1.5
-  damageOverTime: 1
+  damageOverTime:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   lineRenderer: {fileID: 0}
   impactEffect: {fileID: 0}
   impactLight: {fileID: 0}
   offset: {x: 0, y: 0, z: 0}
+  spawnPrefab: {fileID: 1029552276363153832, guid: 72d054207e57b4a4185707a2d643b956, type: 3}
+  spawnRate: 0.02
+  spawnHealth: 50
+  spawnDamage: 0
+  spawnRange: 0
+  spawnSpeed: 10

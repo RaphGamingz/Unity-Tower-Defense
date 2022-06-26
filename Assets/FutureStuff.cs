@@ -12,6 +12,7 @@ public class FutureStuff
     //APRIL FOOLS ENEMY WHICH DOESNT "DIE"
     //Self destruct tower
     //A way to escape the building
+    //Support for the terrain to be different colours
 
     //TODO
     //Finish enemy summoner
