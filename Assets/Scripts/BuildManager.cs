@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 public class BuildManager : MonoBehaviour
 {
@@ -71,7 +72,15 @@ public class BuildManager : MonoBehaviour
         if (!tower.GetDestroyed())
         {
             PlayerStats.ChangeTowerCount(-1); //Reduce number of towers
-            PlayerStats.ChangeEnergy(tower.GetTowerBlueprint().buyCost / 2); //Give back half of the energy required to build the tower
+            if (tower.TowerLevel == 0)
+            {
+                PlayerStats.ChangeEnergy(tower.GetTowerBlueprint().buyCost / 2); //Give back half of the energy required to build the tower
+
+            }
+            else
+            {
+                PlayerStats.ChangeEnergy((tower.GetTowerBlueprint().buyCost + tower.GetTowerBlueprint().upgradeCosts.Take(tower.TowerLevel).Sum()) / 2); //Give back half of the energy required to build the tower
+            }
             tower.SetDestroyed(true); //Set the tower to be destroyed
             Destroy(Instantiate(sellEffect, tower.transform.position, Quaternion.identity), 2f); //Create sell effect and destroy 2 seconds later
             return;

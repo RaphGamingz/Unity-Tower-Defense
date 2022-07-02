@@ -15,8 +15,6 @@ public class FutureStuff
     //Support for the terrain to be different colours
 
     //TODO
-    //Finish enemy summoner
-    //Finish tower spawner
     //Finish credit system
     //SAVING - DONT SAVE GAMESTATE, SAVE STATS BUT NOT WAVES E.G. How tower battles only saves gold and towers unlocked
 }

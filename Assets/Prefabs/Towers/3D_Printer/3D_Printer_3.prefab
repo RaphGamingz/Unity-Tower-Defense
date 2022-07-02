@@ -324,7 +324,7 @@ MonoBehaviour:
   spawnHealth: 60
   spawnDamage: 20
   spawnRange: 4
-  spawnSpeed: 10
+  spawnSpeed: 9
 --- !u!1 &4610192613426921191
 GameObject:
   m_ObjectHideFlags: 0

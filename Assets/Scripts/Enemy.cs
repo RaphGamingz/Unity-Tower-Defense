@@ -5,6 +5,8 @@ public class Enemy : MonoBehaviour
 {
     private Transform target;
     private int waypointIndex = 0;
+    [HideInInspector]
+    public int pos;
     [Header("Attributes")]
     public float speed = 10f;
     public float turnSpeed = 50f;
@@ -30,6 +32,7 @@ public class Enemy : MonoBehaviour
         healthBar.maxValue = health;
         healthBar.value = health;
         target = Waypoints.points[waypointIndex];
+        pos = WaveSpawner.getEnemyPos();
     }
     void Update()
     {
@@ -63,7 +66,9 @@ public class Enemy : MonoBehaviour
                     Transform enemy = Instantiate(timeSummon, transform.position, transform.rotation, WaveSpawner.instance.enemyParent);
                     WaveSpawner.enemyList.Add(enemy);
                     WaveSpawner.EnemiesAlive++;
-                    enemy.GetComponent<Enemy>().setWaypoint(target, waypointIndex);
+                    Enemy e = enemy.GetComponent<Enemy>();
+                    e.setWaypoint(target, waypointIndex);
+                    e.setPos(pos);
                 }
             }
             if ((transform.position - target.position).sqrMagnitude <= 0.01f * speed)
@@ -116,6 +121,10 @@ public class Enemy : MonoBehaviour
     {
         target = waypoint;
         waypointIndex = index;
+    }
+    public void setPos(int _pos)
+    {
+        pos = _pos;
     }
     private void dissolve()
     {

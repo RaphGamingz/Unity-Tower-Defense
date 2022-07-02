@@ -35,7 +35,7 @@ public class PathBullet : MonoBehaviour
             Transform enemyT = WaveSpawner.enemyList[i];
             if (enemyT)
             {
-                if ((enemyT.position - transform.position).sqrMagnitude < distance * distance + 0.5)
+                if ((enemyT.position - transform.position).sqrMagnitude < distance * distance + 0.01f * speed)
                 {
                     try
                     {
@@ -55,6 +55,7 @@ public class PathBullet : MonoBehaviour
                                 {
                                     Explode();
                                 }
+                                Destroy(Instantiate(effect, transform.position, transform.rotation), 7f); //Create particle effect and destroy after 7 seconds
                                 Destroy(gameObject);
                             }
                         }
@@ -105,6 +106,7 @@ public class PathBullet : MonoBehaviour
     {
         if (waypointIndex <= 0) //If it has reached the end waypoint
         {
+            Destroy(Instantiate(effect, transform.position, transform.rotation), 7f); //Create particle effect and destroy after 7 seconds
             Destroy(gameObject);
             return;
         }

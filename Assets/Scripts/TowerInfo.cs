@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Linq;
 
 public class TowerInfo : MonoBehaviour
 {
@@ -46,7 +47,13 @@ public class TowerInfo : MonoBehaviour
                 upgradeText.text = "<b>NO UPGRADES</b>";
                 upgradeButton.interactable = false;
             }
-            sellText.text = "<b>SELL</b>\n" + tb.buyCost / 2 + " Energy";
+            if (tower.TowerLevel == 0)
+            {
+                sellText.text = "<b>SELL</b>\n" + tb.buyCost / 2 + " Energy";
+            } else
+            {
+                sellText.text = "<b>SELL</b>\n" + (tb.buyCost + tb.upgradeCosts.Take(tower.TowerLevel).Sum()) / 2 + " Energy";
+            }
             gameObject.SetActive(true);
         } else //If tower is null, disable UI
         {

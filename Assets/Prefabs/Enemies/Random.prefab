@@ -370,13 +370,17 @@ MonoBehaviour:
   speed: 5
   turnSpeed: 30
   health: 16
+  awardsEnergy: 1
   energy: 5
   summonsEnemies: 1
   deathSummon:
   - {fileID: 7671005614711700736, guid: ed41df4f76aba94499d2c971c0be66c9, type: 3}
+  - {fileID: 7671005614711700736, guid: ed41df4f76aba94499d2c971c0be66c9, type: 3}
   - {fileID: 8012661263942050595, guid: ec3fa2056c6f7a141b9ae5cf978f6248, type: 3}
-  - {fileID: 6589012053840389951, guid: c3bac284a01f69446b530aa89b069308, type: 3}
+  - {fileID: 8012661263942050595, guid: ec3fa2056c6f7a141b9ae5cf978f6248, type: 3}
   - {fileID: 2597849212268423910, guid: a683dc42e809625448a88b8314d4780b, type: 3}
+  - {fileID: 2597849212268423910, guid: a683dc42e809625448a88b8314d4780b, type: 3}
+  - {fileID: 6589012053840389951, guid: c3bac284a01f69446b530aa89b069308, type: 3}
   timeSummon: {fileID: 0}
   summonCooldown: 20
   renderedObject: {fileID: 9222880554406458400}

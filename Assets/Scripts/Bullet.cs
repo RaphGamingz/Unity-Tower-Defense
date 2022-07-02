@@ -77,9 +77,4 @@ public class Bullet : MonoBehaviour
             catch (System.Exception) {}
         }
     }
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, range); //Draw a green sphere to show range of bullet
-    }
 }

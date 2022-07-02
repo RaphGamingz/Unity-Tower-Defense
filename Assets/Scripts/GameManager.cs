@@ -9,8 +9,6 @@ public class GameManager : MonoBehaviour
     public Material lighting;
 
     public GameObject gameEndEffect;
-
-    public TextMeshPro creditsText;
     public void Awake()
     {
         if (instance == null)
@@ -23,10 +21,6 @@ public class GameManager : MonoBehaviour
             Debug.LogError("More than one game manager in a scene");
         }
     }
-    void Start()
-    {
-        creditsText.text = "Credits: " + PlayerPrefs.GetInt("Credits", 0);
-    }
     public static void updateHealth(int health)
     {
         if (health <= 0 && !gameEnded)
@@ -34,7 +28,7 @@ public class GameManager : MonoBehaviour
             endGame(); //end game if player's helath is less than or equal to 0
             PlayerPrefs.SetInt("Credits", PlayerPrefs.GetInt("Credits", 0) + Mathf.Clamp(WaveSpawner.GetWave() - 5, 0, 100) * 5);
             PlayerPrefs.Save();
-            instance.creditsText.text = "Credits: " + PlayerPrefs.GetInt("Credits", 0);
+            Unlocks.updateCredits();
         }
         if (gameEnded)
             health = PlayerStats.startHealth; //If game has already ended, reset health

@@ -12,6 +12,7 @@ public class WaveSpawner : MonoBehaviour
     private float countdown = 15f;
     private int waveIndex = 0;
     public static List<Transform> enemyList = new List<Transform>();
+    private static int currentEnemyPos = 0;
     public static WaveSpawner instance = null;
     void Awake()
     {
@@ -56,6 +57,7 @@ public class WaveSpawner : MonoBehaviour
         BuildManager.instance.WaveStart(); //Tell buildmanager that the wave has started
         UIManager.UpdateWave(waveIndex); //Update UI
         Wave wave = waves[waveIndex - 1];
+        currentEnemyPos = 0;
         for (int i = 0; i < wave.enemies.Length; i++)
         {
             EnemyType enemyType = wave.enemies[i];
@@ -94,5 +96,9 @@ public class WaveSpawner : MonoBehaviour
     public static int GetWave()
     {
         return instance.waveIndex;
+    }
+    public static int getEnemyPos()
+    {
+        return currentEnemyPos++;
     }
 }
