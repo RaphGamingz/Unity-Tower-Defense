@@ -11,6 +11,7 @@ public class WaveSpawner : MonoBehaviour
     public float timeBetweenWaves = 5f;
     private float countdown = 15f;
     private int waveIndex = 0;
+    private bool spawning = false;
     public static List<Transform> enemyList = new List<Transform>();
     private static int currentEnemyPos = 0;
     public static WaveSpawner instance = null;
@@ -36,7 +37,7 @@ public class WaveSpawner : MonoBehaviour
             UIManager.UpdateCount(countdown);
             return;
         }
-        if (EnemiesAlive > 0)
+        if (EnemiesAlive > 0 || spawning)
         {
             return;
         }
@@ -52,6 +53,7 @@ public class WaveSpawner : MonoBehaviour
     }
     IEnumerator SpawnWave()
     {
+        spawning = true;
         if (waveIndex < waves.Length)
             waveIndex++;
         BuildManager.instance.WaveStart(); //Tell buildmanager that the wave has started
@@ -69,6 +71,7 @@ public class WaveSpawner : MonoBehaviour
             }
         }
         PlayerStats.ChangeEnergy(wave.bonusEnergy);
+        spawning = false;
     }
     void SpawnEnemy(Transform prefab)
     {

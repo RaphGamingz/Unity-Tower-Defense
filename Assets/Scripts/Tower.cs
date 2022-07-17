@@ -1,5 +1,6 @@
-using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
+
 public class Tower : MonoBehaviour
 {
     public TowerType towerType = TowerType.None;
@@ -374,6 +375,10 @@ public class NoZone : MonoBehaviour
     public Tower parent;
     void OnMouseOver()
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return; //Stops the tower from being selected if there is UI in front of the tower
+        }
         if (Input.GetMouseButtonDown(0))
         {
             parent.selected(0); //Call the tower's selected function

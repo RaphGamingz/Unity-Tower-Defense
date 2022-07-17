@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
         if (gameEnded == true) //If game has ended, start the game
         {
             gameEnded = false;
+            Unlocks.instance.setUnlockPanel(false);
             if (terrainLoaded != mapID) //if terrain isn't the same terrain as before
             {
                 TerrainLoader.sloadTerrain(Application.dataPath + "/Resources/Maps/" + mapID + ".txt"); //Load terrain
@@ -59,6 +60,7 @@ public class GameManager : MonoBehaviour
             Waypoints.RemovePath();
             PlayerStats.Reset();
             WaveSpawner.Reset();
+            Unlocks.instance.setUnlockPanel(true);
             TowerInfo.instance.setTower(null);
             gameEnded = true;
         }

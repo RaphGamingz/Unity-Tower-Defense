@@ -9,4 +9,5 @@ public class TowerBlueprint
     public List<GameObject> upgradedTowers;
     [Tooltip("If the tower can be placed on ground")]
     public bool ground;
+    public bool aimable;
 }

@@ -195,7 +195,7 @@ Canvas:
   m_RenderMode: 0
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
-  m_PixelPerfect: 0
+  m_PixelPerfect: 1
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
@@ -240,6 +240,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MainGameScene: Game
   resolutionDropdown: {fileID: 1269348108}
+  fullscreenToggle: {fileID: 1833418885}
 --- !u!1 &178189904
 GameObject:
   m_ObjectHideFlags: 0
@@ -1340,9 +1341,9 @@ MonoBehaviour:
   m_Vertical: 1
   m_MovementType: 2
   m_Elasticity: 0.1
-  m_Inertia: 1
+  m_Inertia: 0
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 10
   m_Viewport: {fileID: 394666045}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 802073023}
@@ -1907,6 +1908,7 @@ GameObject:
   - component: {fileID: 1388255106}
   - component: {fileID: 1388255105}
   - component: {fileID: 1388255104}
+  - component: {fileID: 1388255107}
   m_Layer: 5
   m_Name: Cursor
   m_TagString: Untagged
@@ -1922,7 +1924,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1388255102}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 81595039}
@@ -1985,6 +1987,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1388255102}
   m_CullTransparentMesh: 1
+--- !u!223 &1388255107
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1388255102}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 30001
+  m_TargetDisplay: 0
 --- !u!1 &1432285626
 GameObject:
   m_ObjectHideFlags: 0
@@ -2042,7 +2065,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Version 0.0.7.1
+  m_text: Version 0.0.7.2
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

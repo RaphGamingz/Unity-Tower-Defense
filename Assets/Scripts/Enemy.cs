@@ -142,6 +142,7 @@ public class Enemy : MonoBehaviour
     {
         if (dissolveValue >= 1)
         {
+            renderedObject.material.SetFloat("Time", 1);
             appearing = false; //Set the enemy to stop appearing when it is fully appeared
         }
         else

@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 public class TowerInfo : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class TowerInfo : MonoBehaviour
     public Button upgradeButton;
     public TextMeshProUGUI upgradeText;
     public TextMeshProUGUI sellText;
+    public TextMeshProUGUI aimText;
+    public GameObject aim;
     private BuildManager buildManager;
     private Tower tower;
     void Awake()
@@ -54,6 +57,8 @@ public class TowerInfo : MonoBehaviour
             {
                 sellText.text = "<b>SELL</b>\n" + (tb.buyCost + tb.upgradeCosts.Take(tower.TowerLevel).Sum()) / 2 + " Energy";
             }
+            aim.SetActive(tb.aimable);
+            aimText.text = Regex.Replace(Regex.Replace(tower.aimtype.ToString(), @"(\P{Ll})(\P{Ll}\p{Ll})", "$1 $2"), @"(\p{Ll})(\P{Ll})", "$1 $2"); //Gets the enum's string and also splits camel case to multiple words
             gameObject.SetActive(true);
         } else //If tower is null, disable UI
         {
@@ -75,5 +80,6 @@ public class TowerInfo : MonoBehaviour
     public void SetAimType(int aimtype)
     {
         tower.aimtype = (AimType) aimtype;
+        aimText.text = Regex.Replace(Regex.Replace(tower.aimtype.ToString(), @"(\P{Ll})(\P{Ll}\p{Ll})", "$1 $2"), @"(\p{Ll})(\P{Ll})", "$1 $2"); //Gets the enum's string and also splits camel case to multiple words
     }
 }
